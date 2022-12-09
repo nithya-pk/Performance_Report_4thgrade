@@ -33,4 +33,8 @@ Based on an interactive menu, options are provided for: <br />
   4. Search by Last Name
   5. Print Graph
   6. Exit
- There is error handling for option 3 and 4 based on several user testing.
+ There is error handling for overall menu options (if option other than 1-6 is chosesn) and option 3, 4 (for incorrect SIDs, wrong last names) based on several user testing.
+ 
+ ## Important Considerations ##
+ Folder Structure: input files have to be under "/data" folder, python file is outside the "/data" folder
+ 
