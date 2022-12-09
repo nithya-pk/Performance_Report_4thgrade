@@ -52,8 +52,8 @@ def load_data(folder, core_subjects):
                     students[row[0].upper()][f"{subject}"] = round(sum(float(x) for x in row[1::]) / len(row[1::]), 2)
                     line_count += 1
 
-    for student in students:  # Rounding grades to second decimal place
-        average_core = round(sum(float(students[student][x]) for x in core_subjects)/ len(core_subjects),2,)
+    for student in students:  
+        average_core = round(sum(float(students[student][x]) for x in core_subjects)/ len(core_subjects),2) # Rounding grades to second decimal place
         students[student]["average_core"] = average_core
         # Based on average of only the core subjects, secondary school is decided
         # 2.33 or better - Gymnasium
@@ -102,7 +102,7 @@ def submenu(records):
     for id, record in enumerate(records):
         print(f"{id + 1}.", record["lastname"], record["firstname"], record["sid"])
     print(67 * "-")
-    element = input("Enter user number: ")
+    element = input("\nEnter user number: ")
     return int(element) - 1
 
 
@@ -127,7 +127,7 @@ def save_chart(data, filename): # creates a bar graph
     chart = df.plot.bar(rot=0, ylabel="Number of pupils", title="Performance of 4th grade", grid=True, legend=True).get_figure()
     chart.savefig(filename)
 
-def print_menu():  ## Your menu design here
+def print_menu():  # Menu display
     print("\n", 30 * "-", "MENU", 30 * "-")
     print("1. Show all output data")
     print("2. Save CSV file as <output.csv>")
@@ -161,7 +161,7 @@ if __name__ == "__main__":
             name = input("\nEnter user name: ")
             search_name(name=name, data=data)
         elif choice == "5":
-            name = input("\nEnter file name <supported pdf, jpg, png>: ")
+            name = input("\nEnter file name <supported pdf, jpg, png>. If no extension is provided, default is .png: ")
             save_chart(data, name)       
         elif choice == "6":
             print("\nBye ! \n")
