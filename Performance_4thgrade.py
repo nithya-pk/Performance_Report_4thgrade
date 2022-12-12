@@ -9,8 +9,7 @@ Code for: Final grades and secondary school mapping for 4th grade students
         grades_musik.csv - musik grades containing individual homework, probe and schulaufgabe scores
         grades_sport.csv - sport grades containing individual schulaufgabe scores
     core subjects (these are used to calculate overall scores) have more homework, probe and schulaufgabe as compared to non-core subjects
-
-    Code will calculate aggregate of all the different homework, probe, schulaufgabe and create a new CSV file output. Also display graph
+    Code will calculate aggregate of all the different homework, probe, schulaufgabe and create a new CSV file output. Also displays graph.
 """
 
 import os  # module to interact with underlying OS for handling folders
@@ -25,7 +24,6 @@ def load_data(folder, core_subjects):
     Reads student_data.csv file and creates a dictionary of dictionaries with the student's ID as the key.
     Also reads grades*.csv files and adds grades to the dictionary.
     Finally, calculates average of the core subjects and assigns student to a school based on this average.
-
     :parameter folder: Folder where  student_data.csv and grades*.csv files are located
     :parameter core_subjects: List of subjects that are considered core subjects
     :return: A dictionary of dictionaries
@@ -45,14 +43,12 @@ def load_data(folder, core_subjects):
                 students[row[2]]["email"] = row[3]
                 students[row[2]]["section"] = row[4]
                 line_count += 1
-
+ 
     # read the different grades*.csv files and calculate average of all grades
     for csv_file in glob.glob(os.path.join(folder, "grades*.csv")):
         with open(csv_file) as file:
             # create subject lines from file names
-            subject = os.path.splitext(os.path.basename(file.name))[0].replace(
-                "grades_", ""
-            )
+            subject = os.path.splitext(os.path.basename(file.name))[0].replace("grades_", "")
             csv_reader = csv.reader(file, delimiter=",")
             line_count = 0
             for row in csv_reader:
@@ -128,7 +124,11 @@ def submenu(records):
     for id, record in enumerate(records):
         print(f"{id + 1}.", record["lastname"], record["firstname"], record["sid"])
     print(67 * "-")
-    element = input("Enter user number: ")
+
+    element = int(input("Enter user number: "))
+    while element-1 < 0 or element-1 > id:
+        element = int(input("Please enter only a number listed above: "))
+    print (id, element)
     return int(element) - 1
 
 
@@ -142,9 +142,7 @@ def search_name(name, data):
     for pupil in data:
         if name.upper() in data[pupil]["lastname"].upper():
             found_records.append(data[pupil])
-    if (
-        len(found_records) > 1
-    ):  # if there are multiple names with same last name, sub menu needed to identify single record
+    if (len(found_records) > 1):  # if there are multiple names with same last name, sub menu needed to identify single record
         single_record = submenu(found_records)
         for key in found_records[single_record]:
             print(key, ": ", found_records[single_record][key])
@@ -157,7 +155,6 @@ def search_name(name, data):
 
 def save_chart(data, filename):  # creates a bar graph
     """Saves bar chart. Takes a list of dictionaries and a filename and creates a bar graph of the data.
-
     :parameter data: a list of dictionaries, each dictionary containing keys "school" and "section"
     :parameter filename: name of the file that the graph has to be saved as
     """
@@ -187,9 +184,7 @@ def print_menu():
 
 if __name__ == "__main__":
     core_subjects = ["deutsch", "hsu", "mathematik"]  # setting core subjects
-    data = load_data(
-        "data", core_subjects=core_subjects
-    )  # generate array based on the core subjects
+    data = load_data("data", core_subjects=core_subjects)  # generate array based on the core subjects
     loop = True
 
     while loop:  # While loop which will keep going until loop = False
@@ -219,6 +214,4 @@ if __name__ == "__main__":
             print("\nBye ! \n")
             loop = False  # close loop
         else:
-            print(
-                f"\nBe nice, input correct number. {choice} is not an option provided. \n"
-            )
+            print(f"\nBe nice, input correct number. {choice} is not an option provided. \n")
