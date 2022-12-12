@@ -128,7 +128,6 @@ def submenu(records):
     element = int(input("Enter user number: "))
     while element-1 < 0 or element-1 > id:
         element = int(input("Please enter only a number listed above: "))
-    print (id, element)
     return int(element) - 1
 
 
@@ -215,3 +214,6 @@ if __name__ == "__main__":
             loop = False  # close loop
         else:
             print(f"\nBe nice, input correct number. {choice} is not an option provided. \n")
+
+
+
